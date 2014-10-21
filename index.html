@@ -48,72 +48,111 @@
 					<p>
 						<small><a href=http://www.meetup.com/OpenStack-Finland-User-Group/events/203219072/Openstack>3rd OpenStackFin User Group meetup, 23/10/2014</a></small>
 					</p>
-					<p>
-						<small><a href="https://github.com/t0mk">Tomáš Karásek</a>, name.surname(without diacritics) at digile.fi</small>
-					</p>
+					<p> <small><a href="https://github.com/t0mk">Tomáš Karásek</a>, <a href=http://digile.fi>DIGILE Oy</a></small> </p>
+                    <p><small>&lt;name.surname(without diacritics) at digile.fi&gt;</small></p>
                     <p><small>if you want to check all the links, slides are online at</small></p><p>ow.ly/CMJFD</p>
 				</section>
 
-                <section data-background="#121314" data-background-transition="slide">
-                <script type="text/javascript" src="https://asciinema.org/a/12971.js" id="asciicast-12971" data-size="big" async></script>
-                </section>
 
 				<section>
-					<h2>Ansible</h2>
-					<p>Simplistic tool for automating management of IT infrastructure</p>
-					</p>
-                    <ul>
-                    <li>provision, configure, manage</li>
-                    <li>no server component, push based</li>
-                    <li>control machine &#8594; SSH &#8594; managed nodes</li>
-                    <li>low requirements for managed nodes: SSH server allowing sudo-capable user, python 2.{4+simplejson,5}+
-                    </ul>
+                    <section>
+                        <h2>Ansible</h2>
+                        <p>Simplistic tool for automating management of IT infrastructure</p>
+                        </p>
+                        <p class="fragment">Provision.</p>
+                        <p class="fragment">Configure.</p>
+                        <p class="fragment">Manage.</p>
+                    </section>
+                    <section>
+                        <h2>Ansible</h2>
+                        <ul>
+                        <li>no server component, push based</li>
+                        <li>control machine &#8594; SSH &#8594; managed nodes</li>
+                        <li>low requirements for managed nodes: SSH server allowing sudo-capable user, python 2.{4+simplejson,5}+
+                        <li>no specific DSL</li>
+                        <li>works extensively with YAML and JSON &#8658; easy to extend and automate</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Ansible</h2>
+                        <h3>How it works</h3>
+
+                        <p class="stretch">
+                        <img class=stretch src="ans.png">
+                        </p>
+
+                    </section>
+                    <section>
+                        <h2>Ansible</h2>
+                        <h3>How it looks</h3>
+					<pre><code class="yaml" data-trim contenteditable>
+---
+- apt:
+    name: python-pip
+
+- pip:
+    name: docker-py
+
+- docker:
+    name: webapp1
+    image: training/webapp
+    command: python app.py
+    ports: 8001:5000
+					</code></pre>
+
+
+                    </section>
+
 				</section>
 
-				<!-- Example of nested vertical slides -->
 				<section>
 					<section>
-						<h2>Ansible on OpenStack</h2>
-						<h3>Provisioning</h3>
+						<h3>Provisioning with Ansible on OpenStack 1</h2>
+                        <p>Creating virtual machines, images, networks, floating IPs.</p>
 						<p> {nova,glance,quantum,keystone}_* <a href=http://docs.ansible.com/list_of_cloud_modules.html>cloud modules</a></p>
 						<p> <a href=http://docs.ansible.com/nova_compute_module.html>nova_compute module</a> improved in 1.8</a></p>
+                        <p> can't create security groups </p>
+                        <p> automatic assignment of flaoting IP is nova-based </p>
 					</section>
+
+                    <section data-background="#121314" data-background-transition="slide">
+                            <h3>Provisioning with Ansible on OpenStack 2</h2>
+                    <script type="text/javascript" src="https://asciinema.org/a/12971.js" id="asciicast-12971" data-size="big" async></script>
+                    </section>
 					<section>
-						<h3>Configuration</h3>
-						<p>Not different than elsewhere.</p>
 					</section>
-					<section>
-						<h2>Inventory</h2>
-						<p><a href=http://docs.ansible.com/intro_inventory.html>Ansible inventory</a>: static + pseudostatic + dynamic</p>
-						<p><a href=https://github.com/ansible/ansible/blob/devel/plugins/inventory/nova.py>nova inventory plugin</a> &#8658; You can refer to nodes by their OpenStack name!!!
-						<p>I use combination of nova, .ssh/config and static alias for localhost. <a href=https://git.forgeservicelab.fi/ansible/inventory/tree/master>git repo</a></p>
+
+                </section>
+
+                <section>
+						<h3>Configuration with Ansible on OpenStack</h3>
+						<p>For virtual machines not different than elsewhere.</p>
+                        <p>Handling cloud resources is a bit different than
+                </section>
+
+                <section>
+                    <section>
+						<h2>Ansible Inventory on OpenStack</h2>
+                        <p>List of managed nodes and groups of them</p>
+						<p><a href=http://docs.ansible.com/intro_inventory.html>Ansible inventory</a>: static or dynamic</p>
+						<p><a href=https://github.com/ansible/ansible/blob/devel/plugins/inventory/nova.py>nova inventory plugin</a> &#8658; gets the list from Nova API with the Python client</p>
+
+                    </section>
+                    <section>
+                    <h3>Inventory: Aspects to consider</h3>
+                       <ul>
+                       <li>Grouping: cloud, region, tenant, custom grouping by metadata (nova boot --meta &lt;key=value&gt;)</li>
+                       <li>Access over private IP addresses</li>
+                       <li> </li>
+                       </ul>
+
+                       <p> Host patterns: selecting targets</p>
+
+						<p>I use combination of nova, .ssh/config and static alias
+                           for localhost.
+                           <a href=https://git.forgeservicelab.fi/ansible/inventory/tree/master>git repo</a>
+                        </p>
 					</section>
-				</section>
-
-
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-
-
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					000000
 				</section>
 
 
@@ -198,11 +237,6 @@ function linkify( selector ) {
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: 'linear',
-				// transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
-
-				// Parallax scrolling
-				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
-				// parallaxBackgroundSize: '2100px 900px',
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
