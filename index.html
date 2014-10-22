@@ -58,7 +58,6 @@
                     <section>
                         <h2>Ansible</h2>
                         <p>Simplistic tool for automating management of IT infrastructure</p>
-                        </p>
                         <p class="fragment">Provision.</p>
                         <p class="fragment">Configure.</p>
                         <p class="fragment">Manage.</p>
@@ -78,7 +77,7 @@
                         <h3>How it works</h3>
 
                         <p class="stretch">
-                        <img class=stretch src="ans.png">
+                        <img class=stretch src="ans.png" alt="How Ansible works">
                         </p>
 
                     </section>
@@ -97,7 +96,8 @@
     name: webapp1
     image: training/webapp
     command: python app.py
-    ports: 8001:5000
+    ports: 8001:5000style="left: -100px; width: 1040px; top: -150px;"
+                    # style="width: 960px; height: 700px; transform: translate(-50%, -50%) scale(0.619714) translate(50%, 50%);"
 					</code></pre>
 
 
@@ -107,39 +107,36 @@
 
 				<section>
 					<section>
-						<h3>Provisioning with Ansible on OpenStack 1</h2>
-                        <p>Creating virtual machines, images, networks, floating IPs.</p>
-						<p> {nova,glance,quantum,keystone}_* <a href=http://docs.ansible.com/list_of_cloud_modules.html>cloud modules</a></p>
-						<p> <a href=http://docs.ansible.com/nova_compute_module.html>nova_compute module</a> improved in 1.8</a></p>
-                        <p> can't create security groups </p>
-                        <p> automatic assignment of flaoting IP is nova-based </p>
+						<h3>Provisioning with Ansible on OpenStack 1</h3>
+                        <ul>
+                        <li>Creating virtual machines, images, networks, floating IPs.</li>
+						<li> {nova,glance,quantum,keystone}_* <a href=http://docs.ansible.com/list_of_cloud_modules.html>cloud modules</a></li>
+						<li> <a href=http://docs.ansible.com/nova_compute_module.html>nova_compute module</a> improved in 1.8</li>
+                        <li> can't create security groups </li>
+                        </ul>
 					</section>
 
-                    <section data-background="#121314" data-background-transition="slide">
-                            <h3>Provisioning with Ansible on OpenStack 2</h2>
-                    <script type="text/javascript" src="https://asciinema.org/a/12971.js" id="asciicast-12971" data-size="big" async></script>
+                    <section data-background="#121314" data-background-transition="slide" >
+                    <script class="stretch" type="text/javascript" src="https://asciinema.org/a/13171.js" id="asciicast-13171" data-size="big" async></script>
                     </section>
-					<section>
-					</section>
 
                 </section>
 
                 <section>
 						<h3>Configuration with Ansible on OpenStack</h3>
 						<p>For virtual machines not different than elsewhere.</p>
-                        <p>Handling cloud resources is a bit different than
                 </section>
 
                 <section>
                     <section>
-						<h2>Ansible Inventory on OpenStack</h2>
+						<h2>Management/Orchestration: Ansible Inventory</h2>
                         <p>List of managed nodes and groups of them</p>
 						<p><a href=http://docs.ansible.com/intro_inventory.html>Ansible inventory</a>: static or dynamic</p>
 						<p><a href=https://github.com/ansible/ansible/blob/devel/plugins/inventory/nova.py>nova inventory plugin</a> &#8658; gets the list from Nova API with the Python client</p>
 
                     </section>
                     <section>
-                    <h3>Inventory: Aspects to consider</h3>
+                    <h3>Ansible Inventory on OpenStack: Aspects to consider</h3>
                        <ul>
                        <li>Grouping: cloud, region, tenant, custom grouping by metadata (nova boot --meta &lt;key=value&gt;)</li>
                        <li>Access over private IP addresses</li>
@@ -155,64 +152,11 @@
 					</section>
 				</section>
 
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-
-				<section>
-					<section id="fragments">
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
-
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-current-blue">highlight-current-blue</p>
-					</section>
-				</section>
-
 				<section>
 					<h1>Links</h1>
                     <ul>
-                    <li><a href=https://github.com/t0mk/ansible-utils>My awesome ansible wrappers</a></li>
-                    <li><a href=https://github.com/t0mk/openstack-utils>ry awesome OpenStack wrappers</a></li>
+                    <li><a href=https://github.com/t0mk/ansible-utils>My Ansible wrappers</a></li>
+                    <li><a href=https://github.com/t0mk/openstack-utils>My OpenStack wrappers</a></li>
                     <li><a href=https://github.com/t0mk/ansible_on_OS/tree/gh-pages>This reveal.js presentation</a></li>
                     <li>Awesome book: <a href=https://devopsu.com/books/taste-test-puppet-chef-salt-stack-ansible.html>Taste Test</a> - a comparison of configuration management tools</li>
                     </ul>
