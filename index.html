@@ -96,8 +96,7 @@
     name: webapp1
     image: training/webapp
     command: python app.py
-    ports: 8001:5000style="left: -100px; width: 1040px; top: -150px;"
-                    # style="width: 960px; height: 700px; transform: translate(-50%, -50%) scale(0.619714) translate(50%, 50%);"
+    ports: 8001:5000
 					</code></pre>
 
 
@@ -107,50 +106,99 @@
 
 				<section>
 					<section>
-						<h3>Provisioning with Ansible on OpenStack 1</h3>
+						<h2>Provisioning with Ansible on OpenStack</h2>
                         <ul>
                         <li>Creating virtual machines, images, networks, floating IPs.</li>
 						<li> {nova,glance,quantum,keystone}_* <a href=http://docs.ansible.com/list_of_cloud_modules.html>cloud modules</a></li>
 						<li> <a href=http://docs.ansible.com/nova_compute_module.html>nova_compute module</a> improved in 1.8</li>
                         <li> can't create security groups </li>
+                        <li> demo &#8595; </li>
                         </ul>
 					</section>
 
                     <section data-background="#121314" data-background-transition="slide" >
                     <script class="stretch" type="text/javascript" src="https://asciinema.org/a/13171.js" id="asciicast-13171" data-size="big" async></script>
                     </section>
+					<section>
+						<h2>Provisioning with Ansible on OpenStack: Summary</h2>
+                        <ul><li>An alternative to Heat?</li></ul>
+                    </section>
 
                 </section>
 
                 <section>
-						<h3>Configuration with Ansible on OpenStack</h3>
+						<h2>Configuration with Ansible on OpenStack</h2>
 						<p>For virtual machines not different than elsewhere.</p>
                 </section>
 
                 <section>
                     <section>
 						<h2>Management/Orchestration: Ansible Inventory</h2>
-                        <p>List of managed nodes and groups of them</p>
-						<p><a href=http://docs.ansible.com/intro_inventory.html>Ansible inventory</a>: static or dynamic</p>
-						<p><a href=https://github.com/ansible/ansible/blob/devel/plugins/inventory/nova.py>nova inventory plugin</a> &#8658; gets the list from Nova API with the Python client</p>
+                        <ul>
+                        <li>What does this mean?</li>
+                        <li>What is <a href=http://docs.ansible.com/intro_inventory.html>Ansible inventory</a>, static and dynamic</li>
+                        <li>List of managed nodes and groups of them</li>
+                        </ul>
+					<pre><code data-trim contenteditable>
+mail.example.com
+
+[webservers]
+foo.example.com
+bar.example.com
+
+[dbservers]
+one.example.com
+two.example.com
+three.example.com
+					</code></pre>
+
+
 
                     </section>
                     <section>
-                    <h3>Ansible Inventory on OpenStack: Aspects to consider</h3>
+                    <h2>Ansible Inventory on OpenStack</h2>
                        <ul>
-                       <li>Grouping: cloud, region, tenant, custom grouping by metadata (nova boot --meta &lt;key=value&gt;)</li>
-                       <li>Access over private IP addresses</li>
-                       <li> </li>
+						<li><a href=https://github.com/ansible/ansible/blob/devel/plugins/inventory/nova.py>nova inventory plugin</a> &#8658; gets the list from Nova API with the Python client</li>
+                        <li>Grouping: cloud, region, tenant, custom hostgroups by metadata (nova boot --meta &lt;key=value&gt;)</li>
+                        <li>Access over private IP addresses</li>
+                        <li>I have improved the Nova inventory: <a href="https://github.com/ansible/ansible/pull/9378">pull request</a></li>
+                        <li>caching, guessing ssh user based on image name, refering to instances by Nova name, support for more tenants/regions/OpenStack</li>
+                        <li> demo &#8595; </li>
                        </ul>
-
-                       <p> Host patterns: selecting targets</p>
-
-						<p>I use combination of nova, .ssh/config and static alias
-                           for localhost.
-                           <a href=https://git.forgeservicelab.fi/ansible/inventory/tree/master>git repo</a>
-                        </p>
+					</section>
+                    <section data-background="#121314" data-background-transition="slide" >
+                    <script class="stretch" type="text/javascript" src="https://asciinema.org/a/13173.js" id="asciicast-13173" data-size="big" async></script>
+                    </section>
+                    <section>
+                    <h2>Ansible Inventory on OpenStack: Summary</h2>
+                       <ul>
+						<li>I use combination of nova, .ssh/config and static alias for localhost: <a href=https://git.forgeservicelab.fi/ansible/inventory/tree/master>git repo</a></li>
+                       </ul>
 					</section>
 				</section>
+                <section>
+                    <section>
+                    <h2>My workflow</h2>
+                    <ul>
+                    <li>the whole process: ansible run on a vanilla Linux image</li>
+                    <li>to properly test the whole process, ansible-playbook toward a dev machine is not enough &#8592; Goes for any conf management tool!</li>
+                    <li>need to automate from instance boot to ansible run</li>
+                    <li>OpenStack Python clients, custom scripts</li>
+                    <li>dependencies in requirements.yml, since 1.8 as good as librarians</li>
+                   <li> demo &#8595; </li>
+                    </ul>
+                    </section>
+                    <section data-background="#121314" data-background-transition="slide" >
+                    <script class="stretch" type="text/javascript" src="https://asciinema.org/a/13177.js" id="asciicast-13177" data-size="big" async></script>
+                    </section>
+                    <section>
+                    <h2>Workflow: summary</h2>
+                        <ul>
+                        <li>Maybe better off with Vagrant</li>
+                        <li>Ansible-pull?</li>
+                        </ul>
+                    </section>
+                </section>
 
 				<section>
 					<h1>Links</h1>
@@ -159,8 +207,13 @@
                     <li><a href=https://github.com/t0mk/openstack-utils>My OpenStack wrappers</a></li>
                     <li><a href=https://github.com/t0mk/ansible_on_OS/tree/gh-pages>This reveal.js presentation</a></li>
                     <li>Awesome book: <a href=https://devopsu.com/books/taste-test-puppet-chef-salt-stack-ansible.html>Taste Test</a> - a comparison of configuration management tools</li>
+                    <li>Another awesome book: <a href=https://book.serversforhackers.com/>Servers for Hackers</a></li>
                     </ul>
 				</section>
+				<section>
+					<h1>Questions and comments</h1>
+				</section>
+
 
 			</div>
 
@@ -181,6 +234,11 @@
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: 'linear',
+                width: 1150,
+                height: 800,
+                //margin: 0.1,
+                //minScale 0.2,
+                //maxScale 2.0,
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
